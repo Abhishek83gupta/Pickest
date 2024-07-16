@@ -5,6 +5,8 @@ import Signup from "../pages/Signup";
 import SellerDashboard from "../pages/SellerDashboard";
 import BuyerDashboard from "../pages/BuyerDashboard";
 import HeroSection from "./HeroSection";
+import PhotoGallery from "../Components/PhotoGallery"
+import Footer from '../Components/Footer'
 
 export {
     Navbar,
@@ -13,5 +15,7 @@ export {
     Signup,
     SellerDashboard,
     BuyerDashboard,
-    HeroSection
+    HeroSection,
+    PhotoGallery,
+    Footer
 }

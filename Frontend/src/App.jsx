@@ -1,12 +1,13 @@
 import React from 'react'
 import {Outlet} from 'react-router-dom' 
-import {Navbar} from './Components/index.js'
+import {Navbar, Footer} from './Components/index.js'
 
 const App = () => {
   return (
     <div>
       <Navbar/>
       <Outlet/>
+      <Footer/>
     </div>
   )
 }
