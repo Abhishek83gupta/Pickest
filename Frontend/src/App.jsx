@@ -1,15 +1,24 @@
-import React from 'react'
-import {Outlet} from 'react-router-dom' 
-import {Navbar, Footer} from './Components/index.js'
+import { useEffect, useRef } from "react";
+import { Navbar, Footer } from "./Components/index.js";
+import { Outlet, useLocation } from "react-router-dom";
+import gsap from "gsap";
 
 const App = () => {
-  return (
-    <div>
-      <Navbar/>
-      <Outlet/>
-      <Footer/>
-    </div>
-  )
-}
+    const nodeRef = useRef(null);
+    const location = useLocation();
 
-export default App
+  useEffect(()=>{
+    if(nodeRef.current){
+      gsap.fromTo(nodeRef.current, {opacity:0}, {opacity:1, duration:1})
+    }
+  },[location])  
+  return (
+    <div ref={nodeRef}>
+      <Navbar />
+      <Outlet location={location} />
+      <Footer />
+    </div>
+  );
+};
+
+export default App;
