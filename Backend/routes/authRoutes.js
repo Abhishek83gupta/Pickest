@@ -4,8 +4,7 @@ const router = express.Router()
 
 
 router.post("/login",login)
-router.post("/login",signup)
-
+router.post("/signup",signup)
 
 
 
