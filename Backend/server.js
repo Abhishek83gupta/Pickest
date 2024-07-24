@@ -1,12 +1,19 @@
 const express = require("express");
 require('dotenv').config()
 const { readdirSync } = require("fs");   
+const cors = require("cors")
+
 const { connectDB } = require("./Database/dbConnection");
+
 
 connectDB();
 const app = express();
 
-const PORT = process.env.PORT;
+//Middleware
+app.use(express.json());
+app.use(cors())
+
+const PORT = process.env.PORT || 5000 ;
 app.get("/",(req,res)=>{
     res.send("<h1> Hello bro </h1>")
 })
