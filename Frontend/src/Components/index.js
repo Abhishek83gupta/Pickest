@@ -8,7 +8,9 @@ import HeroSection from "./HeroSection";
 import PhotoGallery from "../Components/PhotoGallery";
 import Footer from '../Components/Footer';
 import DashBoardSidebar from "../Components/DashBoardSidebar";
-
+import PhotoManagement from "./seller/PhotoManagement"
+import DashboardHeader from "../Components/DashboardHeader"
+import ImageAdd from "./ImageAdd";
 
 export {
     Navbar,
@@ -21,4 +23,7 @@ export {
     PhotoGallery,
     Footer,
     DashBoardSidebar,
+    PhotoManagement,
+    DashboardHeader,
+    ImageAdd
 }
