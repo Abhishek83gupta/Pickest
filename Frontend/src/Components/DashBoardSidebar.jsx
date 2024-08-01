@@ -23,7 +23,7 @@ const DashBoardSidebar = () => {
         !sidebar == true
           ? "-translate-x-[500px] sm:translate-x-0"
           : "translate-x-0"
-      } flex text-lg font-semibold bg-white shadow-lg flex-col gap-2 w-fit min-h-screen p-3 list-none justify-between items-center`}
+      } ease-in-out duration-300 sm:static flex text-lg font-semibold bg-white shadow-lg flex-col gap-2 w-fit min-h-screen p-3 list-none justify-between items-center`}
     >
       <div>
         {/* Circle with my first letter */}
