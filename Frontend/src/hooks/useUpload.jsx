@@ -1,7 +1,7 @@
 import React from "react";
 
 const useUpload = async ({ image, onUploadProgress }) => {
-
+  console.log("Upload preset is",import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET )
   const upload = async () => {
     try {
       const formData = new FormData();
@@ -26,13 +26,15 @@ const useUpload = async ({ image, onUploadProgress }) => {
       const res = await axios.post(
         `https://api.cloudinary.com/v1_1/${
           import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
-        }/image/upload`
+        }/image/upload`,
+        formData,
+        config
       );
 
       const data = res.data;
       if(!data) return console.log("Image upload failed")
+      return data;
 
-        return data
     } catch (error) {
         return error.message;
     }

@@ -60,6 +60,8 @@ const ImageAdd = () => {
  }
 
    } catch (error) {
+    console.log(error);
+    
     return toast.error(error.response.data.message)
    }
   }
@@ -67,7 +69,7 @@ const ImageAdd = () => {
   return (
     <div className="p-5 bg-white  rounded-2xl shadow-md">
       <h2 className="text-xl font-bold">Add New Product</h2>
-      <form className="gird grid-cols-1 gap-2 my-4">
+      <form className="gird grid-cols-1 gap-2 my-4" onSubmit={addPost}>
         <img
           src={`${
             image
@@ -90,7 +92,6 @@ const ImageAdd = () => {
            )
          }
       
-
         <div className="flex flex-col">
           <label htmlFor="image" className="font-bold">
             Image
