@@ -16,7 +16,7 @@ const verifyToken = (req, res, next) =>{
       req.id = user.id;
       req.author = user.author;
       req.accountType = user.accountType;
-
+      
       next()
     })
     
@@ -28,6 +28,7 @@ const verifyToken = (req, res, next) =>{
 
 }
 
+module.exports = { verifyToken }
 
 //Bearer jbfuo34uitgh344354
 //We have to split -> " "

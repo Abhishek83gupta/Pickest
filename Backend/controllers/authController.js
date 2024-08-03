@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const { generateAccessToken } = require("../Helpers/accessToken");
-const { generateRefreshToken } = require("./refreshToken");
+const { generateRefreshToken } = require("../Helpers/refreshToken");
 
 // Signup user
 const signup = async (req, res) => {
@@ -65,7 +65,7 @@ const login = async (req, res) => {
         .json({ success: false, message: "Invalid credentials" });
 
     const data = {
-        id: user.id,
+        id: user._id,
         accountType : user.accountType,
         author : user.username,
     }
