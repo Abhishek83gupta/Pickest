@@ -34,7 +34,7 @@ const ImageAdd = () => {
     const {public_id, secure_url } = await useUpload({
         image,
         onUploadProgress,
-    });
+   });
 
     if(!public_id || !secure_url) return toast.error("Image upload failed");
 
@@ -43,7 +43,7 @@ const ImageAdd = () => {
         price,
         image :secure_url,
         public_id : public_id,
-        author ,
+        author,
     } ,{
         headers : {
             "Authorization" : "Bearer " + localStorage.getItem("accestoken"),

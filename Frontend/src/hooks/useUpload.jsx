@@ -1,39 +1,28 @@
-import React from "react";
+import axios from "axios"
 
 const useUpload = async ({ image, onUploadProgress }) => {
-  console.log("Upload preset is",import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET )
+ 
   const upload = async () => {
     try {
       const formData = new FormData();
       formData.append("file", image);
-      formData.append(
-        "upload_preset",
-        import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
-      );
-      formData.append(
-        "api key",
-        import.meta.env.VITE_CLOUDINARY_UPLOAD_API_KEY
-      );
+      formData.append("upload_preset",import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+      formData.append("api key",import.meta.env.VITE_CLOUDINARY_UPLOAD_API_KEY);
 
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        onUploadProgress,
+        onUploadProgress, 
         withCredentials: false,
       };
 
-      const res = await axios.post(
-        `https://api.cloudinary.com/v1_1/${
-          import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
-        }/image/upload`,
-        formData,
-        config
-      );
+      const res = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,formData,config);
+      const data = await res.data;
 
-      const data = res.data;
       if(!data) return console.log("Image upload failed")
       return data;
+
 
     } catch (error) {
         return error.message;
@@ -41,6 +30,7 @@ const useUpload = async ({ image, onUploadProgress }) => {
   };
 
    const { public_id, secure_url } = await upload();
+   
    return {public_id, secure_url};
 };
 
