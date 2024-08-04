@@ -9,7 +9,7 @@ const createPost = async (req, res) => {
   if (authorAccountType == "buyer") {
     return res
       .status(403)
-      .json({ success: false, message: "Forbidden, only sellers an post" });
+      .json({ success: false, message: "Forbidden, only sellers can post" });
   }
 
   const { title, author, price, image, publicId } = req.body;
