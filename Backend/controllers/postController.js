@@ -78,7 +78,7 @@ const getMyPosts = async (req,res) =>{
       .status(404)
       .json({success:false, message: "No post found"})
 
-     return res.status(200).json({succes:true, message:error.message})
+     return res.status(200).json({succes:true, data: uploads})
      }
   } catch (error) {
     return res.status(500).json({success:false, message:"Internal server error"})
