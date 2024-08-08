@@ -23,16 +23,16 @@ const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const securePassword = await bcrypt.hash(password, salt);
 
-    // user = new User({
-    //   username,
-    //   email,
-    //   password: securePassword,
-    //   accountType,
-    // });
+    user = new User({
+      username,
+      email,
+      password: securePassword,
+      accountType,
+    });
 
-    // await user.save(); // Here complusory
+    await user.save(); // Here complusory
 
-    const newUser = await User.create({username, email, password:securePassword, accountType})
+    // const newUser = await User.create({username, email, password:securePassword, accountType})
     // await newUser.save()    // Here not complusory
     return res
       .status(201)
@@ -82,7 +82,7 @@ const login = async (req, res) => {
         author:user.username
     })
   } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+    return res.status(500).json({ success: false, message: "Internal server error"});
   }
 };
 

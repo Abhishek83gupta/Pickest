@@ -1,36 +1,35 @@
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
-const verifyToken = (req, res, next) =>{
-
+// middleware has req,res,next
+const verifyToken = async (req, res, next) => {
   const authHeader = req.header("Authorization");
-  const token = authHeader && authHeader.split(" ")[1]
-
-  if(!token)
-    return res.status(401).json({success:false, message: "Unauthorized"});
+  const token = authHeader && authHeader.split(" ")[1];
+  
+  if (!token)
+    return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,(err, user) =>{
-      if(err)
-        return res.status(403).json({success: false, message: "Forbidden"})
+   
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err)
+        return res.status(403).json({ success: false, message: err.message });
 
       req.id = user.id;
       req.author = user.author;
       req.accountType = user.accountType;
-      
-      next()
-    })
-    
+
+      next();
+    });
   } catch (error) {
     return res
       .status(500)
-      .json({ success:false, message: "Internal server Error"})
+      .json({ success: false, message: "Internal Server Error" });
   }
+};
 
-}
+module.exports = { verifyToken };
 
-module.exports = { verifyToken }
-
-//Bearer jbfuo34uitgh344354
-//We have to split -> " "
-//["Bearer", "jbfuo34uitgh344354"]
-//[1]
+// Bearer ej72852dadsgasggdafaeer23
+// we have to split -> " "
+// ["Bearer", "ej72852dadsgasggdafaeer23"]
+// [1]
