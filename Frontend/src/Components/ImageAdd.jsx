@@ -46,7 +46,7 @@ const ImageAdd = () => {
         author,
     } ,{
         headers : {
-            "Authorization" : "Bearer " + localStorage.getItem("accestoken"),
+            Authorization : "Bearer " + localStorage.getItem("accessToken"),
         },
     }
 )
@@ -91,7 +91,7 @@ const ImageAdd = () => {
             />
            )
          }
-      
+
         <div className="flex flex-col">
           <label htmlFor="image" className="font-bold">
             Image
