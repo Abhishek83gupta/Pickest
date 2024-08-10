@@ -12,7 +12,7 @@ const verifyToken = async (req, res, next) => {
    
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       if (err)
-        return res.status(403).json({ success: false, message: err.message });
+        return res.status(403).json({ success: false, message: "Forbidden"});
 
       req.id = user.id;
       req.author = user.author;
