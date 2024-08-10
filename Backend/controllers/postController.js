@@ -1,11 +1,11 @@
 const Post = require("../models/postModel.js");
 const User = require("../models/userModel.js");
 
-//Create post
+// Create post
 const createPost = async (req, res) => {
   const authorId = req.id;
   const authorAccountType = req.accountType;
-
+   
   if (authorAccountType == "buyer") {
     return res
       .status(403)
@@ -33,7 +33,6 @@ const createPost = async (req, res) => {
   }
 };
 
-
 // getAllPost
 const getAllPost = async (req,res) =>{
   try {
@@ -50,7 +49,7 @@ const getAllPost = async (req,res) =>{
   }
 }
 
-
+// GetMyposts
 const getMyPosts = async (req,res) =>{
   const authorId = req.id;
   const authorAccountType = req.accountType;
@@ -85,9 +84,117 @@ const getMyPosts = async (req,res) =>{
   }
 }
 
+// deletePost
+const deletePost = async(req,res) =>{
+  const {id} = req.params   
+
+  try {
+    const post = Post.findById(id)
+
+    if(!post)
+      return res
+      .status(404)
+      .json({succes:false, message:"Post not found"})
+
+    const { authorId } = post
+    await User.findByIdAndUpdate(authorId,{
+      $pull:{uploads:id}
+    })
+
+   // we will not do as some of the people had already purchased your asset
+   // await Post.findByIdAndDelete(id)
+ 
+    return res
+      .status(200)
+      .json({succes:true, message:"Post deleted succesfully"})
+
+  } catch (error) {
+    return res.status(500).json({succes:false, message:"Internal server Error"})
+  }
+}
+
+//Search post
+const searchPost = async(req,res) =>{
+   const { search } = req.query
+   try {
+    const posts = await Post.find({title:{ $regex:search, $options: "i" }})
+
+    if(posts.length == 0)
+      return res.status(404).json({succes:false, message:"Post not found"})
+
+    return res.status(200).json({succes :true, data:posts})
+   } catch (error) {
+    return res.status(500).json({succes:false, message:error.message})
+   }
+}
+
+// addtofavourite
+const addToFavourites = async(req, res) =>{
+  const { authorId } = req.id     // through Bearer token 
+  const { postId } = req.params
+
+  try {
+    const user = User.findByIdAndUpdate(authorId,{
+      $push: { favourites : postId}
+    })
+
+    if(!user)
+      return res
+       .status(404)
+       .json({succes:false, message: "User not Found"})
+    
+      return res.status(200).json({success:true, message:"Post added to favourite"})
+  } catch (error) {
+    return res.status(500).json({succes:false, message:error.message})
+  }
+}
+
+// removefromfavourite
+const removeFromFavourites = async(req, res) =>{
+  const { authorId } = req.id     // through Bearer token 
+  const { postId } = req.params
+
+  try {
+    const user = User.findByIdAndUpdate(authorId,{
+      $pull: { favourites : postId}
+    })
+
+    if(!user)
+      return res
+       .status(404)
+       .json({succes:false, message: "User not Found"})
+    
+      return res.status(200).json({success:true, message:"Post added to favourite"})
+  } catch (error) {
+    return res.status(500).json({succes:false, message:error.message})
+  }
+}
+
+// getfavourite
+const getFavourites = async (req, res) => {
+
+  const authorId = req.id
+  try {
+    const { favourites } = await User.findById(authorId).populate("favourites")
+    if(!favourites)
+      return res
+      .status(404)
+      .json({success:false, message:"No Favourites added"})
+
+    return res.status(200).json({ success : true, data:favourites })
+ 
+  } catch (error) {
+    return res.status(500).json({success:false, message:error.message})
+  }
+}
 
 module.exports = {
   createPost,
   getAllPost,
-  getMyPosts
+  getMyPosts,
+  deletePost,
+  searchPost,
+  addToFavourites,
+  removeFromFavourites,
+  getFavourites
 }
