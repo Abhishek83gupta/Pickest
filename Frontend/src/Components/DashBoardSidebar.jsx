@@ -2,20 +2,38 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoLogOut } from "react-icons/io5";
 import { IoMdPhotos, IoIosHeart } from "react-icons/io";
-import { Link, useLocation } from "react-router-dom";
+import { Link,Navigate, useLocation, useNavigate } from "react-router-dom";
 import { SiGoogleanalytics } from "react-icons/si";
 import { AiFillHome } from "react-icons/ai";
 import { FaList } from "react-icons/fa";
 import { setTab } from "../../store/slices/navSlice";
-import { logout } from "../../store/slices/authSlice";
+import { logout, login } from "../../store/slices/authSlice";
+import axios from "axios";
+import toast from "react-hot-toast"
+
 
 const DashBoardSidebar = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const Navigate = useNavigate()
 
   const author = useSelector((state) => state.auth.author);
   const sidebar = useSelector((state) => state.nav.sidebar);
   const tab = useSelector((state) => state.nav.tab);
+
+  const switchProfile = async () =>{
+    const res = await axios.get(import.meta.env.VITE_API_URL + "/switch",{
+       headers : {
+        Authorization : `Bearer ${localStorage.getItem("accessToken")}`
+       }
+    })
+
+    const data = await res.data
+    toast.success(data.message)
+    dispatch(login(data));
+    Navigate(`/${data.role}/profile`)
+  }
+
 
   return (
     <nav
@@ -90,7 +108,13 @@ const DashBoardSidebar = () => {
             <AiFillHome /> Home
           </li>
 
-        
+         <button 
+           className="w-full px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 gap-2 border-b-2 border-black text-center uppercase text-sm py-2"
+           onClick={switchProfile}
+         >Switch to {pathname == "/seller/profile" ? "buyer" : "seller"}
+         </button>
+
+
         </div>
       </div>
 
