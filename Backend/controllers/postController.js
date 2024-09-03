@@ -188,6 +188,56 @@ const getFavourites = async (req, res) => {
   }
 }
 
+
+const getPostsByDateRange = async (req, res) =>{
+  const authorId = req.id;
+  const authorAccountType = req.accountType
+  let data;
+
+  try {
+    if(authorAccountType == "buyer"){    // if buyer ,we have to grab data from their purchased assets
+      const { purchased } = User.findById(authorId).populate("purchased");
+      data = purchased 
+    } else { // if seller then we need uploads data
+      const { uploads } = User.findById(authorId).populate("uploads");
+      data = uploads
+    }
+
+    if(!data)
+       return res
+      .status(500)
+      .json({succes :false, message: "No post found "})
+
+    const now = new Date();
+    const startOfYear = new Date(now.getFullYear(), 0, 1);
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth)
+    const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()))
+
+    const postsThisYear = data.filter(
+      (post) => new Date(post.createdAt) >= startOfYear
+    );
+    const postsThisMonth = data.filter(
+      (post) => new Date(post.createdAt) >= startOfMonth
+    );
+    const PostsThisWeek = data.filter(
+      (post) => new Date(post.createdAt) >= startOfWeek
+    );
+
+    return res
+       .status(200).json({success: true, 
+        data : {
+          tillNow : data,
+          thisYear : postsThisYear,
+          thisMonth : postsThisMonth,
+          thisWeek : PostsThisWeek
+        }
+       })
+
+  } catch (error) {
+    return res.status(500).json({success:false, message:error.message})
+  }
+}
+
 module.exports = {
   createPost,
   getAllPost,
@@ -196,5 +246,6 @@ module.exports = {
   searchPost,
   addToFavourites,
   removeFromFavourites,
-  getFavourites
+  getFavourites,
+  getPostsByDateRange
 }

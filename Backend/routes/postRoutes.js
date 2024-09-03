@@ -9,7 +9,8 @@ const {
      searchPost,
      addToFavourites,
      removeFromFavourites,
-     getFavourites
+     getFavourites,
+     getPostsByDateRange
    } = require("../controllers/postController");
 
 router.post("/post/create", verifyToken, createPost);
@@ -20,6 +21,6 @@ router.get("/posts/search", searchPost)
 router.put("/post/addToFavourites/:postId",verifyToken,addToFavourites )
 router.put("/post/addToFavourites/:postId",verifyToken,removeFromFavourites )
 router.get("/posts/favourites",verifyToken, getFavourites)
-
+router.get("/post/getPostsByDateRange", verifyToken, getPostsByDateRange)
 
 module.exports = router;
