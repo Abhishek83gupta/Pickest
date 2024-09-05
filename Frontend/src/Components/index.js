@@ -11,6 +11,8 @@ import DashBoardSidebar from "../Components/DashBoardSidebar";
 import PhotoManagement from "./seller/PhotoManagement"
 import DashboardHeader from "../Components/DashboardHeader"
 import ImageAdd from "./ImageAdd";
+import Analytics from "./Analytics";
+import ExpenseCard from "./ExpenseCard";
 
 export {
     Navbar,
@@ -25,5 +27,7 @@ export {
     DashBoardSidebar,
     PhotoManagement,
     DashboardHeader,
-    ImageAdd
+    ImageAdd,
+    Analytics,
+    ExpenseCard
 }

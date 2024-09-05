@@ -1,5 +1,5 @@
 import React from 'react'
-import { DashBoardSidebar, PhotoManagement } from '../Components/index.js'
+import { Analytics, DashBoardSidebar, PhotoManagement} from '../Components/index.js'
 
 const SellerDashboard = () => {
   return (
@@ -7,7 +7,7 @@ const SellerDashboard = () => {
       <DashBoardSidebar/>
       <div>  {/*We will change the pages through switch case here */}</div>
       <PhotoManagement/>
-
+      {/* <Analytics/> */}
     </div>
   )
 }
