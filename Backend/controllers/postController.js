@@ -34,9 +34,9 @@ const createPost = async (req, res) => {
 };
 
 // getAllPost
-const getAllPost = async (req,res) =>{
+const getAllPosts = async (req,res) =>{
   try {
-    const posts = Post.find({});
+    const posts = await Post.find({});
     if(posts.length === 0)
       return res
         .status(404)
@@ -45,7 +45,7 @@ const getAllPost = async (req,res) =>{
      return res.status(200).json({succes:true, data:posts})   
 
   } catch (error) {
-    return res.status(500).json({success:true, message:error.message});
+    return res.status(500).json({success:false, message:error.message});
   }
 }
 
@@ -114,17 +114,17 @@ const deletePost = async(req,res) =>{
 }
 
 //Search post
-const searchPost = async(req,res) =>{
-   const { search } = req.query
+const searchPost = async (req,res) =>{
+   const { search } = req.query;
    try {
-    const posts = await Post.find({title:{ $regex:search, $options: "i" }})
+    const posts = await Post.find({title:{ $regex: search, $options: "i" }});
 
     if(posts.length == 0)
-      return res.status(404).json({succes:false, message:"Post not found"})
+      return res.status(404).json({succes:false, message:"Post not found"});
 
-    return res.status(200).json({succes :true, data:posts})
+    return res.status(200).json({succes :true, data:posts});
    } catch (error) {
-    return res.status(500).json({succes:false, message:error.message})
+    return res.status(500).json({succes:false, message:error.message});
    }
 }
 
@@ -240,7 +240,7 @@ const getPostsByDateRange = async (req, res) =>{
 
 module.exports = {
   createPost,
-  getAllPost,
+  getAllPosts,
   getMyPosts,
   deletePost,
   searchPost,
