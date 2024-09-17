@@ -11,9 +11,7 @@ const app = express();
 
 //Middleware
 app.use(express.json());
-app.use(cors({
-  origin:process.env.CLIENT_URL,
-}))
+app.use(cors())
 
 const PORT = process.env.PORT || 5000 ;
 app.get("/",(req,res)=>{
