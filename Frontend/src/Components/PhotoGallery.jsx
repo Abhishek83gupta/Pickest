@@ -103,6 +103,7 @@ const PhotoGallery = () => {
     razorpayWindow.open();
   };
 
+  
   useEffect(()=>{
     getAllImages();
   },[])
