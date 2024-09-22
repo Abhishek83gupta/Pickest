@@ -10,8 +10,10 @@ const razorpayInstance = new Razorpay({
 });
 
 const generateOrder = async (req, res) => {
-  const purchaserId = req.id;
 
+  //getting from middleware
+  const purchaserId = req.id;
+  // from frontend
   const { price } = req.body;
 
   try {
@@ -31,7 +33,7 @@ const generateOrder = async (req, res) => {
       if (error) {
         return res.status(500).json({ success: false, message: error.message });
       }
-
+    // Sending generated order to frontend
       return res.status(200).json({ success: true, data: order });
     });
   } catch (error) {
@@ -40,8 +42,11 @@ const generateOrder = async (req, res) => {
 };
 
 const verifyOrder = async (req, res) => {
+
+  // getting from middleware
   const purchaserId = req.id;
 
+  // from frontend
   const { razorpay_order_id,
           razorpay_payment_id,
           razorpay_signature,
@@ -59,6 +64,8 @@ const verifyOrder = async (req, res) => {
     ).update(sign.toString()).digest("hex");
 
     const isAuthentic = expectedSign === razorpay_signature;
+
+    // Creating Order in DB
     if(isAuthentic){
       const order = new Order({
         purchaserId,
@@ -72,10 +79,14 @@ const verifyOrder = async (req, res) => {
       });
       await order.save();
 
+      // finding by userid and updating purchased field in user model
+      // pushing order to user purchased field
       let userData = await User.findByIdAndUpdate(purchaserId, {
         $push:{ purchased : order._id },
       })
-
+      
+      // finding by postid and updating the purchasedBy field in Post model
+      // pushing userid 
       let postData = await Post.findByIdAndUpdate(postId,{
         $push: { purchasedBy: purchaserId },
       })
