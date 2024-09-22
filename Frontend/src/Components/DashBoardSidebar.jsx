@@ -101,12 +101,13 @@ const DashBoardSidebar = () => {
           </li>
 
  
-          <li
+          <Link
+            to="/"
             className="w-full rounded-lg px-2 hover:bg-black hover:text-white 
        cursor-pointer transition-all ease-linear duration-300 hover:scale-105 flex gap-2 justify-start items-center"
           >
             <AiFillHome /> Home
-          </li>
+          </Link>
 
          <button 
            className="w-full px-2 hover:bg-black hover:text-white cursor-pointer transition-all ease-linear duration-300 gap-2 border-b-2 border-black text-center uppercase text-sm py-2"

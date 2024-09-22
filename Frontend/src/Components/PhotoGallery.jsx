@@ -21,7 +21,7 @@ const PhotoGallery = () => {
     if(posts.length > 0) return;      // resolve the unnessary api call
     const res = await axios.get(import.meta.env.VITE_API_URL + "/post/getAll");
     const { data } = await res.data;
-    console.log(data);
+    // console.log(data);
     dispatch(setAllPosts(data));
   }
 
@@ -103,7 +103,6 @@ const PhotoGallery = () => {
     razorpayWindow.open();
   };
 
-  
   useEffect(()=>{
     getAllImages();
   },[])
