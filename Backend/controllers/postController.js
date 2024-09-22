@@ -231,27 +231,34 @@ const getFavourites = async (req, res) => {
 };
 
 const getPostsByDateRange = async (req, res) => {
+
+  // getting from middleware
   const authorId = req.id;
   const authorAccountType = req.accountType;
+  
+  
   let data;
 
   try {
     if (authorAccountType == "buyer") {
       // if buyer ,we have to grab data from their purchased assets
-      const { purchased } = User.findById(authorId).populate("purchased");
+      const { purchased } = await User.findById(authorId).populate("purchased");
       data = purchased;
     } else {
       // if seller then we need uploads data
-      const { uploads } = User.findById(authorId).populate("uploads");
+      // finding by specific user id,then using populate seeing the upload [] inside all data in {} from
+      // then getting only uploads data in array object form
+      const { uploads } = await User.findById(authorId).populate("uploads");
       data = uploads;
     }
 
+    // if post not found
     if (!data)
-      return res.status(500).json({ succes: false, message: "No post found " });
+      return res.status(500).json({ success: false, message: "No post found " });
 
     const now = new Date();
     const startOfYear = new Date(now.getFullYear(), 0, 1);
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth);
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
 
     const postsThisYear = data.filter(
