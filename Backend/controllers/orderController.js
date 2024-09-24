@@ -23,7 +23,8 @@ const getOrders = async (req, res) => {
 
       // then finds the username of the purchaser by fetching their information from the User model using the purchaserId.
       const { username } = await User.findById(orderData[0].purchaserId);
-  
+      console.log(username);
+      
       orders = orderData.map((order) => {
         return {
           author: order.author,
@@ -48,7 +49,7 @@ const getOrders = async (req, res) => {
         .json({ success: false, message: "No Order found" });
     }
 
-    return res.status(200).json({ success: true, data: orderData });
+    return res.status(200).json({ success: true, data: orders });
   } catch (error) {
     return res.status(200).json({ success: false, message: error.message });
   }
