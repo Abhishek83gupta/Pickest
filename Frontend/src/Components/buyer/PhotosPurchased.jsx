@@ -61,8 +61,13 @@ const PhotosPurchased = () => {
 
       // remove the anchor element from the body and revoke the object url
       document.body.removeChild(a);
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Failed to fetch photos");
+      dispatch(logout());
+    }
   };
+
+  
   return (
     <div>
       <DashboardHeader />
