@@ -6,6 +6,7 @@ import DashboardHeader from "../DashboardHeader";
 import ImageCard from "../ImageCard";
 import axios from "axios";
 import { IoArrowDownCircle } from "react-icons/io5";
+import toast from "react-hot-toast";
 
 const PhotosPurchased = () => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const PhotosPurchased = () => {
     }
   };
 
-  
+
   return (
     <div>
       <DashboardHeader />
