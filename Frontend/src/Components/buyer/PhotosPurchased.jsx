@@ -73,7 +73,7 @@ const PhotosPurchased = () => {
     <div>
       <DashboardHeader />
       <div className="mx-8 grid md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {posts?.map(({ _id, title, postUrl, author, price }) => (
+        { posts?.length > 0 ? posts?.map(({ _id, title, postUrl, author, price }) => (
           <ImageCard
             key={_id}
             title={title}
@@ -89,7 +89,8 @@ const PhotosPurchased = () => {
               />
             }
           />
-        ))}
+        )) : <div>Not purchased photo yet</div>
+      } 
       </div>
     </div>
   );
