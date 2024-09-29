@@ -3,6 +3,7 @@ import { Analytics, DashBoardSidebar, PhotoManagement } from "../Components/inde
 import Orders from "../Components/Orders.jsx";
 import { useSelector } from "react-redux";
 import PhotosPurchased from "../Components/buyer/PhotosPurchased.jsx"
+import Favourite from '../Components/Favourite.jsx';
 
 const BuyerDashboard = () => {
   
@@ -21,7 +22,8 @@ const BuyerDashboard = () => {
               return <Analytics/>;
             case "orders" :  
               return <Orders/>
-
+            case "favourites" :
+              return <Favourite/>
 
             default:
               return <PhotosPurchased/>;

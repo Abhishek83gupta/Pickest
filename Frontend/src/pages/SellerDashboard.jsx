@@ -2,6 +2,7 @@ import React from "react";
 import { Analytics, DashBoardSidebar, PhotoManagement } from "../Components/index.js";
 import Orders from "../Components/Orders.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import Favourite from "../Components/Favourite.jsx";
 
 const SellerDashboard = () => {
 
@@ -20,8 +21,9 @@ const SellerDashboard = () => {
             case "analytics" :
               return <Analytics/>;
             case "orders" :  
-              return <Orders/>
-
+              return <Orders/>;
+            case "favourites" :
+              return <Favourite/>;
 
             default:
               return <PhotoManagement/>;
