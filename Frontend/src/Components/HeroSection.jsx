@@ -18,21 +18,23 @@ const HeroSection = () => {
     }
   };
 
-  return (
-    <div className="sm:w-[60vw] h-[20vh] overflow-clip sm:rounded-3xl mx-auto flex justify-center items-center ">
-      <form className="absolute flex justify-center items-center">
-        <input
-          type="search"
-          id="search"
-          name="search"
-          className="py-5 px-3 w-[80vw] text-xl sm:text-3xl mx-auto outline-none border-b-2 bg-bgColor"
-          placeholder="Search your asset..."
-          onChange={handleSearch}
-        />
-        <IoIosSearch className="text-3xl sm:text-5xl text-gray-400 -ml-10" />
-      </form>
-    </div>
-  );
+    return (
+      <div className="w-[90vw] sm:w-[60vw] h-[20vh] overflow-clip sm:rounded-3xl mx-auto flex justify-center items-center">
+        <form className="relative flex justify-center items-center w-full">
+          <div className="absolute left-4 sm:left-6 flex items-center">
+            <IoIosSearch className="text-2xl sm:text-4xl text-gray-400" />
+          </div>
+          <input
+            type="search"
+            id="search"
+            name="search"
+            className="py-4 sm:py-5 pl-12 sm:pl-16 pr-3 w-full text-lg sm:text-2xl outline-none border-b-2 bg-bgColor rounded-full sm:rounded-full"
+            placeholder="Search the assets of PhotoGallery"
+            onChange={handleSearch}
+          />
+        </form>
+      </div>
+    );
 };
 
 export default HeroSection;
