@@ -23,8 +23,7 @@ const getOrders = async (req, res) => {
 
       // then finds the username of the purchaser by fetching their information from the User model using the purchaserId.
       const { username } = await User.findById(orderData[0].purchaserId);
-      console.log(username);
-      
+   
       orders = orderData.map((order) => {
         return {
           author: order.author,

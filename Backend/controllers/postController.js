@@ -75,7 +75,7 @@ const getMyPosts = async (req, res) => {
     // if seller,then find by _id inside that specific uploads field
     else {
       const { uploads } = await User.findById(authorId).populate("uploads");
-
+      
       if (!uploads)
         return res
           .status(404)
@@ -99,15 +99,15 @@ const deletePost = async (req, res) => {
 
   try {
     // finding post by id
-    const post = Post.findById(id);
+    const post = await Post.findById(id);
 
     // if not post
     if (!post)
-      return res.status(404).json({ succes: false, message: "Post not found" });
+      return res.status(404).json({ success: false, message: "Post not found" });
 
     // This code extracts the authorId from the post document, which represents the user who created the post.
     const { authorId } = post;
-
+  
     // It then updates the author's record in the User collection using findByIdAndUpdate to remove the id of the post from their uploads array.
     // The $pull operator removes the specific id from the uploads array, effectively "detaching" the post from the user's list of uploaded posts.
     await User.findByIdAndUpdate(authorId, {
@@ -119,7 +119,7 @@ const deletePost = async (req, res) => {
 
     return res
       .status(200)
-      .json({ succes: true, message: "Post deleted succesfully" });
+      .json({ success: true, message: "Post deleted succesfully" });
   } catch (error) {
     return res
       .status(500)
@@ -151,29 +151,42 @@ const searchPost = async (req, res) => {
 // This function addtofavourite is designed to allow users to add a specific post 
 const addToFavourites = async (req, res) => {
 
-  // getting from middleware
-  const { authorId } = req.id;
+  // getting from middleware user model _id
+  const  authorId  = req.id;
   // postId is extracted from req.params, which means it's passed in the URL (e.g., /posts/:postId).
   // It represents the ID of the post that the user wants to add to their favorites.
   const { postId } = req.params;
-
+  
   try {
+     // Find the user first
+     const user = await User.findById(authorId);
 
-    // This line finds the user by their authorId and updates their record.
-    // It uses the $push operator to add the postId to the favourites array of the user's document in the User collection.
-    const user = User.findByIdAndUpdate(authorId, {
+     if (!user)
+       return res.status(404).json({ success: false, message: "User not found" });
+ 
+     // Check if postId is already in the user's favourites array
+     const isAlreadyFavourite = user.favourites.includes(postId);
+ 
+     if (isAlreadyFavourite) {
+       return res.status(400).json({
+         success: false,
+         message: "Post is already in favourites",
+       });
+     }
+
+    await User.findByIdAndUpdate(authorId, {
       $push: { favourites: postId },
     });
     
     // if user not found
     if (!user)
-      return res.status(404).json({ succes: false, message: "User not Found" });
+      return res.status(404).json({ success: false, message: "User not Found" });
 
     return res
       .status(200)
       .json({ success: true, message: "Post added to favourite" });
   } catch (error) {
-    return res.status(500).json({ succes: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -181,7 +194,7 @@ const addToFavourites = async (req, res) => {
 const removeFromFavourites = async (req, res) => {
 
   // getting from middleware
-  const { authorId } = req.id; 
+  const  authorId  = req.id; 
   // postId is extracted from the URL parameters (req.params),
   // representing the ID of the post that the user wants to remove from their favorites.
   const { postId } = req.params;
@@ -190,7 +203,7 @@ const removeFromFavourites = async (req, res) => {
 
   // This line attempts to find the user in the database by their authorId and update their document by removing the postId from their favourites array.  
   // The $pull operator removes the specified postId from the favourites array in the user's document if it exists. If postId is not present in the array, nothing happens.
-    const user = User.findByIdAndUpdate(authorId, {
+    const user = await User.findByIdAndUpdate(authorId, {
       $pull: { favourites: postId },
     });
     
@@ -200,7 +213,7 @@ const removeFromFavourites = async (req, res) => {
 
     return res
       .status(200)
-      .json({ success: true, message: "Post added to favourite" });
+      .json({ success: true, message: "Post removed from favourites" });
   } catch (error) {
     return res.status(500).json({ succes: false, message: error.message });
   }
@@ -212,7 +225,6 @@ const getFavourites = async (req, res) => {
   // getting from middleware
   const authorId = req.id;
 
-  
   try {
     // Finding by id and return specific favourite field
     const { favourites } = await User.findById(authorId).populate("favourites");
@@ -231,43 +243,47 @@ const getFavourites = async (req, res) => {
 };
 
 const getPostsByDateRange = async (req, res) => {
-
   // getting from middleware
   const authorId = req.id;
   const authorAccountType = req.accountType;
-  
-  
+
   let data;
 
   try {
     if (authorAccountType == "buyer") {
-      // if buyer ,we have to grab data from their purchased assets
+      // if buyer, we have to grab data from their purchased assets
       const { purchased } = await User.findById(authorId).populate("purchased");
       data = purchased;
     } else {
-      // if seller then we need uploads data
-      // finding by specific user id,then using populate seeing the upload [] inside all data in {} from
-      // then getting only uploads data in array object form
+      // if seller, then we need uploads data
       const { uploads } = await User.findById(authorId).populate("uploads");
       data = uploads;
     }
 
     // if post not found
-    if (!data)
-      return res.status(500).json({ success: false, message: "No post found " });
+    if (!data || data.length === 0)
+      return res.status(404).json({ success: false, message: "No post found" });
 
     const now = new Date();
+
+    // Get the start of the year, month, and week
     const startOfYear = new Date(now.getFullYear(), 0, 1);
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
 
+    // Calculate the start of the week
+    const startOfWeek = new Date(now); // Clone the current date
+    const dayOfWeek = startOfWeek.getDay(); // Get the current day of the week (0 = Sunday, 6 = Saturday)
+    startOfWeek.setDate(startOfWeek.getDate() - dayOfWeek); // Subtract the number of days to get to Sunday
+    startOfWeek.setHours(0, 0, 0, 0); // Reset the time to midnight
+
+    // Filter posts based on the date range
     const postsThisYear = data.filter(
       (post) => new Date(post.createdAt) >= startOfYear
     );
     const postsThisMonth = data.filter(
       (post) => new Date(post.createdAt) >= startOfMonth
     );
-    const PostsThisWeek = data.filter(
+    const postsThisWeek = data.filter(
       (post) => new Date(post.createdAt) >= startOfWeek
     );
 
@@ -277,13 +293,14 @@ const getPostsByDateRange = async (req, res) => {
         tillNow: data,
         thisYear: postsThisYear,
         thisMonth: postsThisMonth,
-        thisWeek: PostsThisWeek,
+        thisWeek: postsThisWeek,
       },
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 module.exports = {
   createPost,
