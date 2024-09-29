@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ImageCard = ({ id, img, title, price, author, icon1, icon2 }) => {
+const ImageCard = ({ id, img, title, price, author="", icon1, icon2 }) => {
     return (
       <div className="rounded-lg bg-white shadow-lg p-2 h-fit">
         <div className="w-full h-[200px] overflow-hidden rounded-2xl">

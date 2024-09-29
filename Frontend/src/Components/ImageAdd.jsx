@@ -67,17 +67,17 @@ const ImageAdd = () => {
   }
 
   return (
-    <div className="p-5 bg-white  rounded-2xl shadow-md">
+    <div className="p-5 sm:ml-4 bg-white  rounded-2xl shadow-md">
       <h2 className="text-xl font-bold">Add New Product</h2>
       <form className="gird grid-cols-1 gap-2 my-4" onSubmit={addPost}>
         <img
           src={`${
             image
               ? URL.createObjectURL(image)
-              : "https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              : "https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw"
           }`}
           alt="this picture"
-          className="w-[350px] h-[25vh] sm:h-[30vh] rounded-lg object-cover"
+          className="w-[400px] h-[25vh] sm:h-[30vh] rounded-lg object-cover"
         />
 
         {/* show a progress bar */}
