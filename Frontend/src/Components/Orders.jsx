@@ -19,7 +19,7 @@ const Orders = () => {
 
      const { data } = await res.data;
      dispatch(setOrders(data));
-     console.log("Orders", data);
+    //  console.log("Orders", data);
   }
 
 useEffect(()=>{
