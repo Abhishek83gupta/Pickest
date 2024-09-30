@@ -62,7 +62,7 @@ const Analytics = () => {
   const [thisMonth, setThisMonth] = useState([]);
   const [thisWeek, setThisWeek] = useState([]);
 
-  const pathname = useLocation();
+  const { pathname } = useLocation();
 
   const getPostByDateRange = async () => {
     const res = await axios.get(
