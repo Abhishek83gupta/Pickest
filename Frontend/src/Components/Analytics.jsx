@@ -76,7 +76,7 @@ const Analytics = () => {
     );
 
     const { data } = res.data;
-    console.log(data);
+    // console.log(data);
 
     setTillNow(data.tillNow);
     setThisYear(data.thisYear);
