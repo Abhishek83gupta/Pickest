@@ -129,7 +129,7 @@ const PhotoGallery = () => {
 
   return (
     <div className="p-10 bg-white flex flex-col justify-center items-center">
-      <h3 className="text-3xl font-semibold my-14">Photos</h3>
+      <h3 className="text-3xl font-semibold my-14">Photo Gallery</h3>
 
       {/* All my photos will be listed inside this div */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 bg-20">
