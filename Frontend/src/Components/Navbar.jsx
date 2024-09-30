@@ -38,17 +38,17 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`flex flex-col sm:flex-row justify-between items-start sm:items-center px-5 py-5 ${
+      className={`flex flex-col sm:flex-row justify-between items-center sm:items-center t px-5 py-5 ${
         pathname === "/seller/profile" || pathname === "/buyer/profile"
           ? "hidden"
           : "fixed"
       } fixed top-0 left-0 right-0 shadow-md gap-1 sm:gap-0 z-30 bg-white`}
     >
       {/* logo and site name */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center text-center">
         {/* I will add the image here later */}
-        <Link to="/" className="font-bold text-3xl">
-          <i className="text-red-500">PIC</i><span className="text-orange-400">KEST</span>
+        <Link to="/" className="font-bold text-3xl ml-5 ">
+          <i className="text-red-500 text-center">PIC</i><span className="text-orange-400 text-center">KEST</span>
         </Link>
       </div>
 
