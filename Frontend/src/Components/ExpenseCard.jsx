@@ -65,9 +65,10 @@ const ExpenseCard = ({data, title, value, dataKey}) => {
         <ResponsiveContainer width="100%" height={150}>
           <LineChart
            margin={{
-            top:20,
-            bottom:-50,
-            left: -61
+            top: 10,
+            bottom: 0,  // Adjust bottom margin if necessary
+            left: -61,     // Experiment with this
+            right: 10,    // Experiment with this
            }}
            data={data}>
             <Line
