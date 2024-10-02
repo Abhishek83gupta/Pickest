@@ -125,7 +125,7 @@ const PhotoGallery = () => {
 
   useEffect(() => {
     getAllImages();
-  }, []);
+  },[]);
 
   return (
     <div className="p-10 bg-white flex flex-col justify-center items-center">
