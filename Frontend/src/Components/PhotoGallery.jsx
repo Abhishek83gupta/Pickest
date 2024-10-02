@@ -14,6 +14,7 @@ const PhotoGallery = () => {
 
   const posts = useSelector((state) => state.posts.allPosts);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const role = useSelector((state)=>state.auth.role)
 
   const getAllImages = async () => {
     if (posts.length > 0) return; // resolve the unnessary api call
@@ -143,15 +144,16 @@ const PhotoGallery = () => {
               author={author}
               img={image}
               price={price}
-              icon1={
-                <FaShoppingCart
+              icon1=
+                {
+                  role === "buyer" ?<FaShoppingCart
                   title="Cart"
                   onClick={() =>
                     purchaseImage(price, _id, image, author, title)
                   }
                   className="text-2xl text-black cursor-pointer hover:scale-110 transition-all ease-linear duration-300"
-                />
-              }
+                /> : ""
+                }
               icon2={
                 <IoIosHeart
                   title="Favourite"
