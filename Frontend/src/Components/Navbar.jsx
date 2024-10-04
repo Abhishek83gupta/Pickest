@@ -38,7 +38,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`flex flex-col sm:flex-row justify-between items-center sm:items-center t px-5 py-5 ${
+      className={`flex flex-row sm:flex-row justify-between items-center sm:items-center py-6 px-5 ${
         pathname === "/seller/profile" || pathname === "/buyer/profile"
           ? "hidden"
           : "fixed"
