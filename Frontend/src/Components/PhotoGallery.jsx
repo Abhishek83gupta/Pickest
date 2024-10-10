@@ -14,7 +14,8 @@ const PhotoGallery = () => {
 
   const posts = useSelector((state) => state.posts.allPosts);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const role = useSelector((state)=>state.auth.role)
+  const role = useSelector((state)=>state.auth.role);
+  const accessToken = localStorage.getItem("accessToken");
 
   const getAllImages = async () => {
     if (posts.length > 0) return; // resolve the unnessary api call
@@ -47,7 +48,7 @@ const PhotoGallery = () => {
 
       const { data } = await res.data;
       await handlePaymentVerify(data, id, postUrl, author, title, price);
-      // using a function here to handle the payment verification
+      // will use using a function here to handle the payment verification
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -103,6 +104,13 @@ const PhotoGallery = () => {
   };
 
   const addToFavourite = async (author, postId) => {
+
+    if (!accessToken) {
+      toast.error("Please login to add to favourite");
+      navigate("/login");
+      return;
+    }
+
     try {
       const res = await axios.put(
         import.meta.env.VITE_API_URL + `/post/addToFavourites/${postId}`,
@@ -146,13 +154,13 @@ const PhotoGallery = () => {
               price={price}
               icon1=
                 {
-                  role === "buyer" ?<FaShoppingCart
+                  <FaShoppingCart
                   title="Cart"
                   onClick={() =>
                     purchaseImage(price, _id, image, author, title)
                   }
                   className="text-2xl text-black cursor-pointer hover:scale-110 transition-all ease-linear duration-300"
-                /> : ""
+                /> 
                 }
               icon2={
                 <IoIosHeart
