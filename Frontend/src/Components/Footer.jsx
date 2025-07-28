@@ -13,7 +13,7 @@ const Footer = () => {
       }`}
     >
         <p className="font-normal leading-7 text-grey-700 text-black text-center">
-          2024 @Pickest. All rights reserved.
+           @ {new Date().getFullYear()} Pickest. All rights reserved.
         </p>
       </div>
     </>
