@@ -34,7 +34,7 @@ function Favourite() {
 
   const deleteFavouritePosts = async (author,postId) =>{
     try {
-      const res = await axios.put(import.meta.env.VITE_API_URL + `/post/removeFromFavourites/${postId}`,
+      const res = await axios.put(import.meta.env.VITE_API_URL + `/api/post/removeFromFavourites/${postId}`,
         {
           authorId:author,
         },
