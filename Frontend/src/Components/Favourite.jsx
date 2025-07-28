@@ -13,7 +13,7 @@ function Favourite() {
 
   const getFavouritesPosts = async () => {
     try {
-      const res = await axios.get(import.meta.env.VITE_API_URL + "/posts/favourites",
+      const res = await axios.get(import.meta.env.VITE_API_URL + "/api/posts/favourites",
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),

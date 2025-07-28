@@ -14,7 +14,7 @@ const Navbar = () => {
 
   const refreshToken = async () =>{
    try {
-    const res = await axios.get(import.meta.env.VITE_API_URL + "/refresh", {
+    const res = await axios.get(import.meta.env.VITE_API_URL + "/api/refresh", {
       headers : {
         "Authorization" : "Bearer " + localStorage.getItem("refreshToken"),
       }

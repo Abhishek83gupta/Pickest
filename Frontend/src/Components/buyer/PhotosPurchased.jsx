@@ -17,7 +17,7 @@ const PhotosPurchased = () => {
     try {
       if (posts.length > 0) return;
       const res = await axios.get(
-        import.meta.env.VITE_API_URL + "/post/myPosts",
+        import.meta.env.VITE_API_URL + "/api/post/myPosts",
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
