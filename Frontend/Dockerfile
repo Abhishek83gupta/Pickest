@@ -5,7 +5,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Install dependencies only from package.json/package-lock.json first (better layer caching)
-COPY package*.json .
+COPY package*.json ./
 
 # Install dependencies 
 RUN npm install
