@@ -5,7 +5,7 @@ import { setMyPosts } from "../../../store/slices/postSlice";
 import DashboardHeader from "../DashboardHeader";
 import ImageCard from "../ImageCard";
 import axios from "axios";
-import { IoArrowDownCircle } from "react-icons/io5";
+import { FaDownload } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 const PhotosPurchased = () => {
@@ -68,7 +68,6 @@ const PhotosPurchased = () => {
     }
   };
 
-
   return (
     <div>
       <DashboardHeader />
@@ -81,7 +80,7 @@ const PhotosPurchased = () => {
             price={price}
             img={postUrl}
             icon2={
-              <IoArrowDownCircle
+              <FaDownload
                 title="Download Now"
                 className="text-2xl text-red-500 cursor-pointer
                 hover:scale-110 transition-all ease-linear duration-300"
