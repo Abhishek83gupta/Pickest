@@ -18,13 +18,8 @@ Thumbs.db
 .git
 .gitignore
 
-
 # Testing
 coverage
-
-# Docker-related
-Dockerfile
-.dockerignore
 
 # Editors / IDEs
 .vscode

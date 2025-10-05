@@ -20,10 +20,6 @@ coverage
 __tests__
 jest.config.js
 
-# Docker
-Dockerfile
-.dockerignore
-
 # Editors / IDEs
 .vscode
 .idea
